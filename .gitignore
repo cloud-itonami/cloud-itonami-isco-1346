@@ -1,0 +1,10 @@
+/target
+/.clj-kondo
+/.lsp
+*.swp
+*.swo
+*~
+.DS_Store
+.nrepl-port
+node_modules
+.cpcache
