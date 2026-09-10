@@ -83,16 +83,16 @@ human-in-the-loop interrupt/resume via checkpointing.
                                            +-> :hold               (:hard? true)
 ```
 
-- `src/branch_manager/store.cljc` — `Store` protocol + `MemStore`:
+- `src/branch_manager/store.kotoba` — `Store` protocol + `MemStore`:
   registered branches and customers, committed records, an append-only audit
   ledger.
-- `src/branch_manager/advisor.cljc` — `Advisor` protocol; `mock-advisor`
+- `src/branch_manager/advisor.kotoba` — `Advisor` protocol; `mock-advisor`
   (deterministic, default) proposes a branch management operation from a
   request; `llm-advisor` wraps a `langchain.model/ChatModel` — either way the
   advisor only ever produces a `:propose`-effect proposal, never a committed
   record, and LLM parse failures always yield `confidence 0.0` (forces
   escalation, never fabricated confidence).
-- `src/branch_manager/governor.cljc` — `BranchManagerGovernor/check`: a pure
+- `src/branch_manager/governor.kotoba` — `BranchManagerGovernor/check`: a pure
   function, wired as its own `:govern` node. Hard invariants (unregistered
   branch/customer, a proposal whose `:effect` isn't `:propose`, attempts to
   approve loans or bind the institution financially) always route to `:hold`.
@@ -102,7 +102,7 @@ human-in-the-loop interrupt/resume via checkpointing.
   explicit human approval (`actor/approve!`), matching the README's robotics-premise
   statement that compliance concerns and staffing changes always require
   human oversight.
-- `src/branch_manager/actor.cljc` — `build-graph`, `run-request!`,
+- `src/branch_manager/actor.kotoba` — `build-graph`, `run-request!`,
   `approve!`: the `langgraph.graph/state-graph` wiring itself.
 
 ```bash
